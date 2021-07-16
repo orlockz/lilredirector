@@ -9,10 +9,11 @@ const Routes = (redirects: Array<Redirect>): Router<Handler> => {
   redirects.forEach(redirect => {
     router.get(redirect.path, async (params: Params) => {
       let redirectPath = redirect.redirect
+      let redirectCode = redirect.code
       Object.keys(params).forEach(key =>
         redirectPath = redirectPath.replace(`:${key}`, params[key])
       )
-      return Response.redirect(redirectPath)
+      return Response.redirect(redirectPath, redirectCode)
     })
   })
   return router
